@@ -2,7 +2,7 @@
 {
     public class Endpoint
     {
-        public string? Origin { get; set; }
+        public string? Path { get; set; }
         public string? Method { get; set; }
     }
 }

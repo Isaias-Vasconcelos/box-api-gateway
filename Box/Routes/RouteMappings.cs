@@ -1,4 +1,6 @@
 ﻿using Box.Entities;
+using Box.Services;
+using System.Text.RegularExpressions;
 
 namespace Box.Routes
 {
@@ -8,7 +10,7 @@ namespace Box.Routes
         {
             foreach (var s in config.Services!)
             {
-                var prefix = app.MapGroup($"/api/v{s.Value.Version}/{s.Key}");
+                var prefix = app.MapGroup($"");
 
                 if (s.Value.Config!.EnableAuth) prefix.RequireAuthorization();
 
@@ -19,16 +21,30 @@ namespace Box.Routes
                     switch (e.Value.Method?.ToUpper())
                     {
                         case "POST":
-                            prefix.MapPost(e.Key, () => Results.Ok($"POST {e.Key}"));
+                            prefix.MapPost(e.Value.Path!,async (HttpRequest request , IHttpService service) =>
+                            {
+                                var response = await service.HandlePost(s.Value.Config.Origin!, e.Value.Path!, request.Body);
+                                return Results.Ok(response);
+                            });
                             break;
                         case "GET":
-                            prefix.MapGet(e.Key, () => Results.Ok($"GET {e.Key}"));
+                            var path = ConvertUrl(e.Value.Path!);
+                            prefix.MapGet(path,async (HttpRequest request, IHttpService service) =>
+                            {
+                                var originalUrl = e.Value.Path!;
+
+                                var fullUrl = GetFullUrl(request, originalUrl);
+
+                                var response = await service.HandleGet(s.Value.Config.Origin!, fullUrl);
+
+                                return Results.Ok(response);
+                            });
                             break;
                         case "DELETE":
-                            prefix.MapDelete(e.Key, () => Results.Ok($"DELETE {e.Key}"));
+                            prefix.MapDelete(e.Value.Path!, () => Results.Ok($"DELETE {e.Key}"));
                             break;
                         case "PUT":
-                            prefix.MapPut(e.Key, () => Results.Ok($"PUT {e.Key}"));
+                            prefix.MapPut(e.Value.Path!, () => Results.Ok($"PUT {e.Key}"));
                             break;
                     }
                 }
@@ -37,9 +53,38 @@ namespace Box.Routes
 
         public static void MapStaticRoutes(this IEndpointRouteBuilder app, Gateway config)
         {
-            app.MapGet("/api/spec", () => Results.Ok(config));
+            app.MapGet("/api/spec", () =>
+            {
+                return Results.Ok(config);
+            });
 
-            app.MapPost("/auth", () => Results.Ok("Auth endpoint"));
+            app.MapPost("/auth", () =>
+            {
+                return Results.Ok("Auth endpoint");
+            });
+        }
+
+        private static string ConvertUrl(string url)
+        {
+            return Regex.Replace(url, @"\[(\w+)\]", "{$1}");
+        }
+
+        private static string GetFullUrl(HttpRequest request, string url)
+        {
+            var resolvedPath = Regex.Replace(url, @"\[(\w+)\]", match =>
+            {
+                var key = match.Groups[1].Value;
+
+                if (request.RouteValues.TryGetValue(key, out var value) && value != null)
+                    return Uri.EscapeDataString(value.ToString()!);
+
+                return match.Value;
+            });
+
+            var queryString = request.QueryString.HasValue ? request.QueryString.Value : "";
+            var fullUrl = resolvedPath + queryString;
+
+            return fullUrl;
         }
     }
 }

@@ -1,41 +1,48 @@
 version: 1.0
 appName: SERVICE_MASTER
 services:
-  serviceUser:
-    version: 1
+  servicePost:
     endpoints:
-      getUsers:
-        origin: /api/user/get-users
+      getAllPosts:
+        path: /posts
         method: GET
-      createUser:
-        origin: /api/user/create-user
+      getPostsById:
+        path: /posts/[id]
+        method: GET
+      createPost:
+        path: /posts
         method: POST
-      deleteUser:
-        origin: /api/user/delete-user
-        method: DELETE
     config:
-      origin: http://amazon.s3.78745ghjhgts.xyz67834
+      origin: https://jsonplaceholder.typicode.com/
       enableAuth: false
-  serviceEmail:
-    version: 2
+  serviceUser:
     endpoints:
-      sendEmail:
-        origin: /api/email/send-email-service
-        method: POST
-      receiveEmail:
-        origin: /api/email/receive-email
+      getAllUsers:
+        path: /users
+        method: GET
+      getUserById:
+        path: /users/[id]
         method: GET
     config:
-      origin: http://amazon.s3.78745ghjhgts.xyz
-      enableAuth: true
+      origin: https://jsonplaceholder.typicode.com/
+      enableAuth: false
+  serviceCep:
+    endpoints:
+      getAddressByCep:
+        path: /ws/[cep]/[type]
+        method: GET
+    config:
+      origin: https://viacep.com.br/
+      enableAuth: false
 authInfo:
+  origin: http://origin.s3.24552235235
   enpoint: /api/auth
   secret: b80026d579eb33a70fe44adc7a9a3950dcaa6b6dccf6e93bc0be2d7608ac0ed5
 config:
   useCache: false
   cache:
     periodic: 1
-  useRateLimit: true
+  useRateLimit: false
   rateLimit:
     permitLimit: 10
     windowTypeTime: HOURS
