@@ -1,8 +1,4 @@
-﻿using System.Threading.RateLimiting;
-using Box.Entities;
-using Microsoft.AspNetCore.RateLimiting;
-
-namespace Box.Config;
+﻿namespace Box.Config;
 
 public static class RateLimit
 {

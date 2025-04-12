@@ -1,18 +1,15 @@
-﻿using System.Text;
-using Box.Entities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-
-namespace Box.Config;
+﻿namespace Box.Config;
 
 public static class Auth
 {
-    public static void AddAuthConfig(this IServiceCollection services, Gateway config)
+    public static void AddAuthConfig(this IServiceCollection services, IConfiguration config)
     {
-        if (string.IsNullOrEmpty(config.AuthInfo?.Secret))
-            throw new Exception("AuthInfo.Secret is required for JWT configuration.");
+        string? secret = config["Auth:Secret"];
+        
+        if (string.IsNullOrEmpty(secret))
+            throw new Exception("Secret is required for JWT configuration.");
 
-        var key = Encoding.ASCII.GetBytes(config.AuthInfo?.Secret!);
+        var key = Encoding.ASCII.GetBytes(secret);
         services.AddAuthentication(x =>
         {
             x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

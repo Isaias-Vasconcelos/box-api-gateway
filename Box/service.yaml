@@ -14,7 +14,6 @@ services:
         method: POST
     config:
       origin: https://jsonplaceholder.typicode.com/
-      enableAuth: false
   serviceUser:
     endpoints:
       getAllUsers:
@@ -25,7 +24,6 @@ services:
         method: GET
     config:
       origin: https://jsonplaceholder.typicode.com/
-      enableAuth: false
   serviceCep:
     endpoints:
       getAddressByCep:
@@ -33,12 +31,11 @@ services:
         method: GET
     config:
       origin: https://viacep.com.br/
-      enableAuth: false
-authInfo:
-  origin: http://origin.s3.24552235235
-  enpoint: /api/auth
-  secret: b80026d579eb33a70fe44adc7a9a3950dcaa6b6dccf6e93bc0be2d7608ac0ed5
 config:
+  accessToken: 123456
+  auth:
+    origin: https://service.auth
+    path: /user/verify
   useCache: false
   cache:
     periodic: 1

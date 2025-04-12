@@ -1,12 +1,10 @@
-﻿using System.Text.Json;
-
-namespace Box.Response
+﻿namespace Box.Response
 {
     public static class Helper
     {
-        public static HttpResponseAPI Response(string origin, string enpoint , string method , int statusCode , JsonElement data)
+        public static HttpResponseApi Response(string origin, string enpoint , string method , int statusCode , JsonElement data)
         {
-            return new HttpResponseAPI
+            return new HttpResponseApi
             {
                 Origin = origin,
                 Endpoint = enpoint ,

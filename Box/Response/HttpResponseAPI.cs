@@ -1,8 +1,6 @@
-﻿using System.Text.Json;
-
-namespace Box.Response
+﻿namespace Box.Response
 {
-    public class HttpResponseAPI
+    public class HttpResponseApi
     {
         public string? Origin { get; set; }    
         public string? Endpoint { get; set; }

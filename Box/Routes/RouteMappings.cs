@@ -1,19 +1,15 @@
-﻿using Box.Entities;
-using Box.Services;
-using System.Text.RegularExpressions;
-
-namespace Box.Routes
+﻿namespace Box.Routes
 {
     public static class RouteMappings
     {
-        public static void MapServiceRoutes(this IEndpointRouteBuilder app, Gateway config)
+        public static void MapServiceRoutes(this IEndpointRouteBuilder app)
         {
+            var config = app.ServiceProvider.GetRequiredService<Gateway>();
+
             foreach (var s in config.Services!)
             {
                 var prefix = app.MapGroup($"");
-
-                if (s.Value.Config!.EnableAuth) prefix.RequireAuthorization();
-
+                
                 if (config.Config!.UseRateLimit) prefix.RequireRateLimiting("rate_global");
 
                 foreach (var e in s.Value.Endpoints!)
@@ -21,23 +17,20 @@ namespace Box.Routes
                     switch (e.Value.Method?.ToUpper())
                     {
                         case "POST":
-                            prefix.MapPost(e.Value.Path!,async (HttpRequest request , IHttpService service) =>
+                            prefix.MapPost(e.Value.Path!,async (HttpRequest request , IGatewayService service) =>
                             {
-                                var response = await service.HandlePost(s.Value.Config.Origin!, e.Value.Path!, request.Body);
+                                var response = await service.PostServiceAsync(s.Value.Config.Origin!, e.Value.Path!, request.Body);
                                 return Results.Ok(response);
                             });
                             break;
                         case "GET":
                             var path = ConvertUrl(e.Value.Path!);
-                            prefix.MapGet(path,async (HttpRequest request, IHttpService service) =>
+                            prefix.MapGet(path,async (HttpRequest request, IGatewayService service) =>
                             {
                                 var originalUrl = e.Value.Path!;
-
                                 var fullUrl = GetFullUrl(request, originalUrl);
-
-                                var response = await service.HandleGet(s.Value.Config.Origin!, fullUrl);
-
-                                return Results.Ok(response);
+                                var response = await service.GetServiceAsync(s.Value.Config.Origin!, fullUrl);
+                                return Results.Json(response, statusCode: response.StatusCode);
                             });
                             break;
                         case "DELETE":
@@ -51,16 +44,14 @@ namespace Box.Routes
             }
         }
 
-        public static void MapStaticRoutes(this IEndpointRouteBuilder app, Gateway config)
+        public static void MapStaticRoutes(this IEndpointRouteBuilder app)
         {
-            app.MapGet("/api/spec", () =>
-            {
-                return Results.Ok(config);
-            });
+            var config = app.ServiceProvider.GetRequiredService<Gateway>();
 
-            app.MapPost("/auth", () =>
+            app.MapGet("/api/spec", () => Results.Ok(config));
+            app.MapPost("/auth", async (HttpRequest request, IAuthService service) =>
             {
-                return Results.Ok("Auth endpoint");
+                var auth = await service.AuthenticateServiceAsync(config,request.Body);
             });
         }
 
