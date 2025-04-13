@@ -8,5 +8,6 @@
         public Cache? Cache { get; set; }
         public bool UseRateLimit { get; set; } = false;
         public RateLimit? RateLimit { get; set; }
+        public HttpRetry? HttpRetry { get; set; }
     }
 }

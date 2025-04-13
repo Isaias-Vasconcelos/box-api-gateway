@@ -2,9 +2,9 @@
 {
     public interface IHttpService
     {
-        Task<HttpResponseMessage> HandleGet(string origin , string endpoint);
-        Task<HttpResponseMessage> HandlePost(string origin , string endpoint , Stream json);
-        Task<HttpResponseMessage> HandlePut();
-        Task<HttpResponseMessage> HandleDelete();
+        Task<HttpResponseMessage> GetAsync(string origin , string endpoint);
+        Task<HttpResponseMessage> PostAsync(string origin , string endpoint , Stream json);
+        Task<HttpResponseMessage> PutAsync();
+        Task<HttpResponseMessage> DeleteAsync();
     }
 }

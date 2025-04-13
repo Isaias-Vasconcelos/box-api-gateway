@@ -8,7 +8,7 @@
 
             foreach (var s in config.Services!)
             {
-                var prefix = app.MapGroup($"");
+                var prefix = app.MapGroup($"").RequireAuthorization();
                 
                 if (config.Config!.UseRateLimit) prefix.RequireRateLimiting("rate_global");
 
@@ -19,7 +19,7 @@
                         case "POST":
                             prefix.MapPost(e.Value.Path!,async (HttpRequest request , IGatewayService service) =>
                             {
-                                var response = await service.PostServiceAsync(s.Value.Config.Origin!, e.Value.Path!, request.Body);
+                                var response = await service.PostServiceAsync(s.Value.Config?.Origin!, e.Value.Path!, request.Body);
                                 return Results.Ok(response);
                             });
                             break;
@@ -49,9 +49,11 @@
             var config = app.ServiceProvider.GetRequiredService<Gateway>();
 
             app.MapGet("/api/spec", () => Results.Ok(config));
+            
             app.MapPost("/auth", async (HttpRequest request, IAuthService service) =>
             {
                 var auth = await service.AuthenticateServiceAsync(config,request.Body);
+                return Results.Json(auth, statusCode: auth.StatusCode);
             });
         }
 

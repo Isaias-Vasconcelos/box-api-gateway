@@ -9,7 +9,7 @@
 
         public async Task<HttpResponseApi> GetServiceAsync(string origin, string endpoint)
         {
-            var request = await http.HandleGet(origin, endpoint);
+            var request = await http.GetAsync(origin, endpoint);
             var data = await request.Content.ReadAsStringAsync();
             var json = JsonSerializer.Deserialize<JsonElement>(data);
 
@@ -18,7 +18,7 @@
 
         public async Task<HttpResponseApi> PostServiceAsync(string origin, string endpoint, Stream body)
         {
-            var response = await http.HandlePost(origin, endpoint, body);
+            var response = await http.PostAsync(origin, endpoint, body);
             var responseData = await response.Content.ReadAsStringAsync();
             var json = JsonSerializer.Deserialize<JsonElement>(responseData);
 

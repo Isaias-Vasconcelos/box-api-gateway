@@ -22,8 +22,11 @@ services:
       getUserById:
         path: /users/[id]
         method: GET
+      postUser:
+        path: /users
+        method: POST
     config:
-      origin: https://jsonplaceholder.typicode.com/
+      origin: http://localhost:3000
   serviceCep:
     endpoints:
       getAddressByCep:
@@ -34,8 +37,8 @@ services:
 config:
   accessToken: 123456
   auth:
-    origin: https://service.auth
-    path: /user/verify
+    origin: http://localhost:3000
+    path: /verify-user
   useCache: false
   cache:
     periodic: 1
@@ -46,3 +49,7 @@ config:
     windowTime: 2
     queueProcessingOrder: OLDEST_FIRST
     queueLimit: 0
+  httpRetry:
+    delayTime: 5
+    delayTypeTime: SECONDS
+    maxRetryAttempts: 6
