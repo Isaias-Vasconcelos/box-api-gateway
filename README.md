@@ -8,22 +8,13 @@
 ## 🚀 Funcionalidades
 
 - ✅ Leitura dinâmica de configurações via YAML
-- 🔐 Autenticação JWT com injeção de headers
-- 🔁 Retry automático com Polly
-- 🛡️ Rate Limiting por rota
+- 🔐 Autenticação JWT
+- 🔁 Retry automático
+- 🛡️ Rate Limiting
+- 🚀 Cache
 - ⚠️ Tratamento centralizado de erros
 - 📂 Comunicação segura via rede Docker interna
 - 🧠 Arquitetura extensível
-
----
-
-## 🛠️ Tecnologias Utilizadas
-
-- ASP.NET Core 8
-- Polly (retry/resilience)
-- YamlDotNet
-- JWT Bearer Authentication
-- Middlewares customizados
 
 ---
 
@@ -71,7 +62,7 @@ services:
       origin: http://service-cep:5004
 
 config:
-  accessToken: 123456                    # Token de acesso básico (opcional)
+  accessToken: 123456                    # Token de acesso básico (Gerado no site).
 
   auth:                                  # Autenticação JWT
     origin: http://service-auth:5003     # Serviço que valida o token JWT
@@ -104,7 +95,7 @@ version: '3.8'
 services:
 
   gateway:
-    image: seuusuario/box:latest           # Imagem do Gateway publicada no Docker Hub
+    image: isaiasdevback/box:latest           # Imagem do Gateway publicada no Docker Hub
     ports:
       - "8080:8080"
     volumes:
@@ -177,12 +168,10 @@ http://localhost:8080
 Authorization: Bearer <seu_token_aqui>
 ```
 
-- O gateway valida o token chamando o endpoint `/verify-user` do serviço `auth`.
-- Se for válido, os seguintes headers são injetados automaticamente:
+- O gateway valida o usuário chamando o endpoint que foi definido no serviço `auth`.
+- O serviço definido em `auth`, deve retornar um json que contenha a propriedade `{ "isAuthenticated": true or false }`, caso seja `true` ele gera um Bearer Token e adiciona o seguinte header na requisição:
   - `X-User-Id`
-  - `X-User-Email`
-  - `X-Roles`
-
+    
 ---
 
 ## 🔁 Retry com Polly
@@ -203,7 +192,7 @@ Authorization: Bearer <seu_token_aqui>
 ## ⚠️ Tratamento de Erros
 
 - Todos os erros passam por middlewares centralizados
-- Erros da API retornam mensagens padronizadas (ex: `{"error": "Serviço indisponível"}`)
+- Erros da API retornam mensagens padronizadas (ex: `{"origin":"http://service.m1:5000", "enpoint": "/users" , "statusCode": 500 , "data": { resposta de erro do seu serviço }}`)
 
 ---
 
@@ -215,9 +204,15 @@ curl http://localhost:8080/users   -H "Authorization: Bearer SEU_TOKEN_JWT"
 
 ---
 
+# 🔑 Token de Acesso Necessário para o API Gateway
+
+Para utilizar o **API Gateway**, é necessário configurar o **AccessToken** no arquivo `service.yaml`. Este token é gerado diretamente no **site de autenticação** e é essencial para garantir que somente usuários cadastrados em nossa base possam acessar.
+
+---
+
 ## 📬 Contato
 
-Desenvolvido por [Seu Nome].  
+Desenvolvido por Isaías Vasconcelos.  
 Sinta-se livre para abrir issues ou sugerir melhorias.
 
 ---
