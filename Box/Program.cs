@@ -1,34 +1,35 @@
+using Box.Http;
 using Box.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var deserializer = new DeserializerBuilder()
-    .WithNamingConvention(CamelCaseNamingConvention.Instance) 
-    .Build();
+if (!File.Exists("service.json"))
+    throw new FileNotFoundException("File 'service.json' not found!");
 
-if (!File.Exists("service.yaml"))
-    throw new FileNotFoundException("File 'service.yaml' not found!");
+var json = File.ReadAllText("service.json");
+var config = JsonSerializer.Deserialize<Global>(json);
 
-var yml = File.ReadAllText("service.yaml");
-var config = deserializer.Deserialize<Gateway>(yml);
+builder.Configuration
+    .AddJsonFile("service.json", optional: false, reloadOnChange: true);
+
+builder.Services.AddReverseProxy()
+    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+
+builder.Services.AddSingleton(config);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSingleton(config);
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("AuthPolicy", policy =>
+    policy.RequireAuthenticatedUser());
 
 builder.Services.AddHttpClient<IHttpService, HttpService>();
-builder.Services.AddScoped<IGatewayService, GatewayService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddAuthConfig(builder.Configuration);
-
-if(config.Config!.UseRateLimit)
-    builder.Services.AddRateLimit(config);
+builder.Services.AddRateLimit(config!);
 
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = config.AppName, Version = config.Version });
-
     options.MapType<Dictionary<string, string>>(() => new OpenApiSchema
     {
         Type = "object",
@@ -36,12 +37,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-
 var app = builder.Build();
-
-if (config.Config!.UseRateLimit)
-    app.UseRateLimiter();
-
 
 if (app.Environment.IsDevelopment())
 {
@@ -50,14 +46,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<Error>();
-app.UseMiddleware<AccessToken>();
 
-app.MapServiceRoutes();
-app.MapStaticRoutes();
+app.MapServiceRoutes(builder.Configuration);
 
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapReverseProxy();
 
 app.Run();

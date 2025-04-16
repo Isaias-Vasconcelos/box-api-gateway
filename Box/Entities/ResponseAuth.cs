@@ -1,6 +1,6 @@
 ﻿namespace Box.Entities;
 
-public class Auth
+public class ResponseAuth
 {
     public int StatusCode { get; set; }
     public string? Token { get; set; }

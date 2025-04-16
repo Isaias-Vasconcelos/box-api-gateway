@@ -1,0 +1,86 @@
+{
+  "AuthOrigin": "http://localhost:3000/verify-user",
+  "RateLimit": {
+    "serviceUserLimit": {
+      "PermitLimit": 10,
+      "WindowTypeTime": "HOURS",
+      "WindowTime": 2,
+      "QueueProcessingOrder": "OLDEST_FIRST",
+      "QueueLimit": 0
+    },
+    "servicePostLimit": {
+      "PermitLimit": 10,
+      "WindowTypeTime": "HOURS",
+      "WindowTime": 2,
+      "QueueProcessingOrder": "OLDEST_FIRST",
+      "QueueLimit": 0
+    },
+    "serviceTodoLimit": {
+      "PermitLimit": 10,
+      "WindowTypeTime": "HOURS",
+      "WindowTime": 2,
+      "QueueProcessingOrder": "OLDEST_FIRST",
+      "QueueLimit": 0
+    }
+  },
+  "HttpRetry": {
+    "DelayTime": 5,
+    "DelayTypeTime": "SECONDS",
+    "MaxRetryAttempts": 6
+  },
+  "ReverseProxy": {
+    "Routes": {
+      "serviceUser": {
+        "ClusterId": "serviceUser",
+        "AuthorizationPolicy": "AuthPolicy",
+        "RateLimiterPolicy": "serviceUserLimit",
+        "Match": {
+          "Path": "/users/{**catch-all}"
+        }
+      },
+      "servicePost": {
+        "ClusterId": "servicePost",
+        "AuthorizationPolicy": "AuthPolicy",
+        "RateLimiterPolicy": "servicePostLimit",
+        "Match": {
+          "Path": "/posts/{**catch-all}"
+        }
+      },
+      "serviceTodo": {
+        "ClusterId": "serviceTodo",
+        "AuthorizationPolicy": "AuthPolicy",
+        "RateLimiterPolicy": "serviceTodoLimit",
+        "Match": {
+          "Path": "/todos/{**catch-all}"
+        }
+      }
+    },
+    "Clusters": {
+      "serviceUser": {
+        "Destinations": {
+          "origin1": {
+            "Address": "https://jsonplaceholder.typicode.com/"
+          }
+        }
+      },
+      "servicePost": {
+        "Destinations": {
+          "origin1": {
+            "Address": "https://jsonplaceholder.typicode.com/"
+          }
+        }
+      },
+      "serviceTodo": {
+        "LoadBalancingPolicy": "RoundRobin",
+        "Destinations": {
+          "origin1": {
+            "Address": "https://jsonplaceholder.typicode.com/"
+          },
+          "origin2": {
+            "Address": "https://jsonplaceholder.typicode.com/"
+          }
+        }
+      }
+    }
+  }
+}

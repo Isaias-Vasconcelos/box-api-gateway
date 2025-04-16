@@ -2,7 +2,7 @@
 
 public static class Token
 {
-    public static string GenerateToken(string secret, string accessToken)
+    public static string GenerateToken(string secret)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(secret!);
@@ -10,7 +10,7 @@ public static class Token
         {
             Subject = new ClaimsIdentity(new Claim[]
             {
-                new(ClaimTypes.Name, $"USER_{accessToken}_{Guid.NewGuid().ToString()}"),
+                new(ClaimTypes.Name, $"USER_{Guid.NewGuid().ToString()}"),
                 new(ClaimTypes.Role, "DEFAULT")
             }),
             Expires = DateTime.UtcNow.AddHours(2),

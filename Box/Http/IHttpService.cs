@@ -1,10 +1,6 @@
-﻿namespace Box.Http
+﻿namespace Box.Http;
+
+public interface IHttpService
 {
-    public interface IHttpService
-    {
-        Task<HttpResponseMessage> GetAsync(string origin , string endpoint);
-        Task<HttpResponseMessage> PostAsync(string origin , string endpoint , Stream json);
-        Task<HttpResponseMessage> PutAsync();
-        Task<HttpResponseMessage> DeleteAsync();
-    }
+    Task<HttpResponseMessage> Post(string url, HttpRequest request);
 }

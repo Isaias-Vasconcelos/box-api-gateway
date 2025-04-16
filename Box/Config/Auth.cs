@@ -4,7 +4,7 @@ public static class Auth
 {
     public static void AddAuthConfig(this IServiceCollection services, IConfiguration config)
     {
-        string? secret = config["Auth:Secret"];
+        var secret = config["Auth:Secret"];
         
         if (string.IsNullOrEmpty(secret))
             throw new Exception("Secret is required for JWT configuration.");
