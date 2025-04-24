@@ -1,5 +1,8 @@
 using Box.Http;
 using Box.Middlewares;
+using Box.Services;
+using Box.Services.Implementations;
+using Polly;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +27,7 @@ builder.Services.AddAuthorizationBuilder()
     .AddPolicy("AuthPolicy", policy =>
     policy.RequireAuthenticatedUser());
 
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddHttpClient<IHttpService, HttpService>();
 builder.Services.AddAuthConfig(builder.Configuration);
 builder.Services.AddRateLimit(config!);
@@ -47,7 +51,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<Error>();
 
-app.MapServiceRoutes(builder.Configuration);
+app.MapServiceRoutes();
 
 app.UseHttpsRedirection();
 

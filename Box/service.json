@@ -1,5 +1,5 @@
 {
-  "AuthOrigin": "http://localhost:3000/verify-user",
+  "AuthOrigin": "http://host.docker.internal:3000/verify-user",
   "RateLimit": {
     "serviceUserLimit": {
       "PermitLimit": 10,
