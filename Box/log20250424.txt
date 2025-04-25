@@ -1,0 +1,89 @@
+2025-04-24 22:57:15.814 -03:00 [INF] User profile is available. Using 'C:\Users\isaia\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-04-24 22:57:16.242 -03:00 [INF] Loading proxy data from config.
+2025-04-24 22:57:16.974 -03:00 [INF] Now listening on: http://localhost:5176
+2025-04-24 22:57:16.985 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-04-24 22:57:16.991 -03:00 [INF] Hosting environment: Development
+2025-04-24 22:57:16.994 -03:00 [INF] Content root path: C:\Users\isaia\SISTEMAS\Profissional\Box\Box
+2025-04-24 22:57:17.177 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5176/swagger - null null
+2025-04-24 22:57:17.345 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5176/swagger - 301 0 null 174.103ms
+2025-04-24 22:57:17.364 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5176/swagger/index.html - null null
+2025-04-24 22:57:17.589 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5176/swagger/index.html - 200 null text/html;charset=utf-8 226.2088ms
+2025-04-24 22:57:17.618 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5176/swagger/swagger-ui.css - null null
+2025-04-24 22:57:17.619 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5176/swagger/swagger-ui-bundle.js - null null
+2025-04-24 22:57:17.631 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5176/swagger/swagger-ui-standalone-preset.js - null null
+2025-04-24 22:57:17.766 -03:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2025-04-24 22:57:17.771 -03:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2025-04-24 22:57:17.785 -03:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2025-04-24 22:57:17.787 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5176/swagger/swagger-ui.css - 200 152034 text/css 168.8746ms
+2025-04-24 22:57:17.787 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5176/swagger/swagger-ui-standalone-preset.js - 200 230280 text/javascript 155.6312ms
+2025-04-24 22:57:17.788 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5176/swagger/swagger-ui-bundle.js - 200 1456926 text/javascript 169.757ms
+2025-04-24 22:57:18.559 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5176/swagger/v1/swagger.json - null null
+2025-04-24 22:57:18.625 -03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-04-24 22:57:18.906 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5176/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 347.3088ms
+2025-04-24 22:57:46.753 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5176/todos - application/json 51
+2025-04-24 22:57:46.775 -03:00 [WRN] Failed to determine the https port for redirect.
+2025-04-24 22:57:46.918 -03:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-04-24 22:57:46.944 -03:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-04-24 22:57:46.948 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5176/todos - 401 0 null 194.7066ms
+2025-04-24 22:58:51.671 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5176/auth - application/json 51
+2025-04-24 22:58:51.982 -03:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '16/04/2025 02:14:36', Current time (UTC): '25/04/2025 01:58:51'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2025-04-24 22:58:52.033 -03:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '16/04/2025 02:14:36', Current time (UTC): '25/04/2025 01:58:51'.
+2025-04-24 22:58:52.048 -03:00 [INF] Executing endpoint 'HTTP: POST /auth'
+2025-04-24 22:58:52.203 -03:00 [INF] Start processing HTTP request POST http://host.docker.internal:3000/verify-user
+2025-04-24 22:58:52.225 -03:00 [INF] Sending HTTP request POST http://host.docker.internal:3000/verify-user
+2025-04-24 22:59:13.469 -03:00 [INF] Executed endpoint 'HTTP: POST /auth'
+2025-04-24 22:59:13.624 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5176/auth - 500 null application/json 21953.3193ms
+2025-04-24 23:00:01.729 -03:00 [INF] Application is shutting down...
+2025-04-24 23:00:09.700 -03:00 [INF] User profile is available. Using 'C:\Users\isaia\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-04-24 23:00:09.868 -03:00 [INF] Loading proxy data from config.
+2025-04-24 23:00:10.161 -03:00 [INF] Now listening on: http://localhost:5176
+2025-04-24 23:00:10.169 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-04-24 23:00:10.175 -03:00 [INF] Hosting environment: Development
+2025-04-24 23:00:10.180 -03:00 [INF] Content root path: C:\Users\isaia\SISTEMAS\Profissional\Box\Box
+2025-04-24 23:00:10.719 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5176/swagger/index.html - null null
+2025-04-24 23:00:11.149 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5176/swagger/index.html - 200 null text/html;charset=utf-8 433.7314ms
+2025-04-24 23:00:11.917 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5176/swagger/v1/swagger.json - null null
+2025-04-24 23:00:11.971 -03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-04-24 23:00:12.254 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5176/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 337.3278ms
+2025-04-24 23:00:27.818 -03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5176/auth - application/json 51
+2025-04-24 23:00:27.837 -03:00 [WRN] Failed to determine the https port for redirect.
+2025-04-24 23:00:28.160 -03:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '16/04/2025 02:14:36', Current time (UTC): '25/04/2025 02:00:28'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2025-04-24 23:00:28.232 -03:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '16/04/2025 02:14:36', Current time (UTC): '25/04/2025 02:00:28'.
+2025-04-24 23:00:28.255 -03:00 [INF] Executing endpoint 'HTTP: POST /auth'
+2025-04-24 23:00:28.390 -03:00 [INF] Start processing HTTP request POST http://localhost:3000/verify-user
+2025-04-24 23:00:28.408 -03:00 [INF] Sending HTTP request POST http://localhost:3000/verify-user
+2025-04-24 23:00:28.645 -03:00 [INF] Received HTTP response headers after 217.8172ms - 200
+2025-04-24 23:00:28.652 -03:00 [INF] End processing HTTP request after 270.0257ms - 200
+2025-04-24 23:00:28.798 -03:00 [INF] Setting HTTP status code 200.
+2025-04-24 23:00:28.827 -03:00 [INF] Writing value of type 'ResponseAuth' as Json.
+2025-04-24 23:00:28.897 -03:00 [INF] Executed endpoint 'HTTP: POST /auth'
+2025-04-24 23:00:28.921 -03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5176/auth - 200 null application/json; charset=utf-8 1102.7252ms
+2025-04-24 23:01:00.753 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5176/todos - application/json 51
+2025-04-24 23:01:00.839 -03:00 [INF] Executing endpoint 'serviceTodo'
+2025-04-24 23:01:00.860 -03:00 [INF] [BOX_GATEWAY] - METHOD: GET | HOST: localhost:5176 | PATH: /todos
+2025-04-24 23:01:01.027 -03:00 [INF] Proxying to https://jsonplaceholder.typicode.com/todos HTTP/2 RequestVersionOrLower 
+2025-04-24 23:01:01.610 -03:00 [INF] Received HTTP/2.0 response 200.
+2025-04-24 23:01:01.659 -03:00 [INF] Executed endpoint 'serviceTodo'
+2025-04-24 23:01:01.665 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5176/todos - 200 null application/json; charset=utf-8 912.1576ms
+2025-04-24 23:01:54.412 -03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-04-24 23:02:06.108 -03:00 [INF] Application is shutting down...
+2025-04-24 23:02:48.071 -03:00 [INF] User profile is available. Using 'C:\Users\isaia\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-04-24 23:02:48.240 -03:00 [INF] Loading proxy data from config.
+2025-04-24 23:02:48.541 -03:00 [INF] Now listening on: http://localhost:5176
+2025-04-24 23:02:48.552 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-04-24 23:02:48.555 -03:00 [INF] Hosting environment: Development
+2025-04-24 23:02:48.556 -03:00 [INF] Content root path: C:\Users\isaia\SISTEMAS\Profissional\Box\Box
+2025-04-24 23:02:48.869 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5176/swagger/index.html - null null
+2025-04-24 23:02:49.273 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5176/swagger/index.html - 200 null text/html;charset=utf-8 407.5522ms
+2025-04-24 23:02:49.907 -03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5176/swagger/v1/swagger.json - null null
+2025-04-24 23:02:49.975 -03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-04-24 23:02:50.267 -03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5176/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 361.2849ms

@@ -1,4 +1,4 @@
-﻿namespace Box.Config;
+﻿namespace Box.Extensions;
 
 public static class RateLimit
 {

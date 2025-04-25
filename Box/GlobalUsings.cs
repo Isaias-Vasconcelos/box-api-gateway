@@ -3,7 +3,7 @@ global using System.Security.Claims;
 global using System.Text;
 global using System.Text.Json;
 global using System.Threading.RateLimiting;
-global using Box.Config;
+global using Box.Extensions;
 global using Box.Entities;
 global using Box.Response;
 global using Box.Routes;

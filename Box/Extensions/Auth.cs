@@ -1,10 +1,10 @@
-﻿namespace Box.Config;
+﻿namespace Box.Extensions;
 
 public static class Auth
 {
     public static void AddAuthConfig(this IServiceCollection services, IConfiguration config)
     {
-        var secret = config["Auth:Secret"];
+        var secret = Environment.GetEnvironmentVariable("SECRET") ?? config["Auth:Secret"];
         
         if (string.IsNullOrEmpty(secret))
             throw new Exception("Secret is required for JWT configuration.");

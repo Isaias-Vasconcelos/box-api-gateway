@@ -1,5 +1,5 @@
 {
-  "AuthOrigin": "http://host.docker.internal:3000/verify-user",
+  "AuthOrigin": "http://localhost:3000/verify-user",
   "RateLimit": {
     "serviceUserLimit": {
       "PermitLimit": 10,
@@ -22,11 +22,6 @@
       "QueueProcessingOrder": "OLDEST_FIRST",
       "QueueLimit": 0
     }
-  },
-  "HttpRetry": {
-    "DelayTime": 5,
-    "DelayTypeTime": "SECONDS",
-    "MaxRetryAttempts": 6
   },
   "ReverseProxy": {
     "Routes": {

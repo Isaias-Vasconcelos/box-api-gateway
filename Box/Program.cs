@@ -2,9 +2,17 @@ using Box.Http;
 using Box.Middlewares;
 using Box.Services;
 using Box.Services.Implementations;
-using Polly;
+using Serilog;
+using Log = Serilog.Log;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("log.txt",
+        rollingInterval: RollingInterval.Day,
+        rollOnFileSizeLimit: true)
+    .CreateLogger();
 
 if (!File.Exists("service.json"))
     throw new FileNotFoundException("File 'service.json' not found!");
@@ -19,6 +27,8 @@ builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 builder.Services.AddSingleton(config);
+
+builder.Host.UseSerilog();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
