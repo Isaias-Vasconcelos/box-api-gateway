@@ -359,7 +359,7 @@ YARP aborda a configuração de limites de tempo para conexões com servidores d
 ## 🚩 IMPORTANTE !
 
 As funcionlidades que possuem link externo para a documentação do YARP, é importante modificar apenas o JSON, tudo é feito pelo **service.json**.
-Qualquer configuração deve ser adicionada nele, esquece o código .NET.
+Qualquer configuração deve ser adicionada nele.
 
 ---
 
